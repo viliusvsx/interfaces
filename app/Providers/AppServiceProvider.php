@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
         // By default subindinam šitą Interface su Default StoreLocationImplementation.
         $this->app->bindIf(StoreLocationInterface::class, \App\Implementation\Default\Location\StoreLocationImplementation::class);
 
-        // Tarkim turim kažkokią įmonę, kuri nori, kad kai sukuriame lokaciją, jai automatiškai susikurtu įrašas logging lentelęje.
+        // Tarkim turim kažkokią įmonę, kuri nori, kai kai sukuriame lokaciją, būtų padaromi papildomi atitinkami veiksmai.
         if ($this->currentCompany === 'megatrans') {
             $this->app->bind(StoreLocationInterface::class, \App\Implementation\Megatrans\Location\StoreLocationImplementation::class);
         }
