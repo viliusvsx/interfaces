@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Interfaces\Location\StoreLocationInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,11 +15,19 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
+    protected string $currentCompany = 'megatranss';
+
     /**
      * Bootstrap any application services.
      */
     public function boot(): void
     {
-        //
+        // By default subindinam šitą Interface su Default StoreLocationImplementation.
+        $this->app->bindIf(StoreLocationInterface::class, \App\Implementation\Default\Location\StoreLocationImplementation::class);
+
+        // Tarkim turim kažkokią įmonę, kuri nori, kad kai sukuriame lokaciją, jai automatiškai susikurtu įrašas logging lentelęje.
+        if ($this->currentCompany === 'megatrans') {
+            $this->app->bind(StoreLocationInterface::class, \App\Implementation\Megatrans\Location\StoreLocationImplementation::class);
+        }
     }
 }
